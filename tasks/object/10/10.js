@@ -53,8 +53,6 @@ function IntersectionDeep(data1, data2) {
     return inters;
 }
 
-
-
 const data1 = {a: 1, b: {c: 3}};
 const data2 = {c: 1, b: {c: 3}};
 
