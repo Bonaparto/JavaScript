@@ -6,6 +6,11 @@ function add_info(inf_arr) {
         i++;
     }
     users.push(temp);
+    // users.push({
+    //     id: inf_arr[0],
+    //     name: ínf_arr[1],
+        
+    // })
 }
 
 const users = [
@@ -20,24 +25,6 @@ const users = [
     },
     {
         id: 2,
-        name: 'T',
-        surname: 'asd',
-        age: 21,
-        country: 'kz',
-        phone_number: '687876',
-        email: 'abelsharman85@gmail.com'
-    },
-    {
-        id: 1,
-        name: 'T',
-        surname: 'asd',
-        age: 21,
-        country: 'kz',
-        phone_number: '687876',
-        email: 'abelsharman85@gmail.com'
-    },
-    {
-        id: 1,
         name: 'T',
         surname: 'asd',
         age: 21,

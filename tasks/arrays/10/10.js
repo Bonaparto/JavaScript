@@ -4,7 +4,7 @@ const intersection_of_two = (array1, array2) => {
         for(let j = 0; j < array2.length; ++j) {
             if(array1[i] === array2[j] && !(array1[i] in ans)) {
                 ans.push(array1[i]);
-               break;
+                break;
             } else if(array1[i] in ans) break;
         }
     }

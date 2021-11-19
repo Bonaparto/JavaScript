@@ -18,5 +18,5 @@ const flatten = (array) => {
     return ans;
 }
 
-const data = [1, 2, [3, 4, [5]]];
+const data = [1, 2, [3, 4, [5, 6], [9]]];
 console.log(flatten(data)); // [1, 2, 3, 4, 5]

@@ -1,5 +1,5 @@
 const formPairs = (arr) => {
-    res = {};
+    let res = {};
     for(let i = 0; i < arr.length; ++i) {
         res[arr[i][0]] = arr[i][1]; 
     }

@@ -1,5 +1,5 @@
 const fill = (arraysize, value) => {
-    array = [];
+    let array = [];
     while(arraysize) {
         array.push(value);
         arraysize--;
