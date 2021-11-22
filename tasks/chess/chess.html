@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html> 
+
+    <head>
+        <meta charset="utf-8">
+        <title>Chess where you really can't cheat</title>
+
+        <style>
+            body {
+                padding: 3%;
+                text-align: center;
+            }
+            table {
+                margin: auto;
+                border: 2px solid black; 
+                text-align: center;
+                font-weight: bold;
+                font-size: 20px; 
+                color: beige;
+                background-color: sienna;
+                border-collapse: collapse;
+            }
+            td {
+                width: 50px;
+                height: 50px;
+            }   
+            /* ul {
+                list-style-type: none;
+            } */
+            .light {
+                background-color: beige;
+            }
+            .dark {
+                background-color: burlywood;
+            }
+            .info1 {
+                position: fixed;
+                left: 10px;
+                top: 10px;
+                font-size: 20px;
+            }
+            .info2 {
+                position: fixed;
+                left: 10px;
+                top: 50px;
+                font-size: 20px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="info1">
+            <strong>Turn : </strong><span id="turn">White</span><br>
+        </div>
+        <div class="info2">
+            <strong>Moves : </strong> 
+            <ol id="moves"></ol>
+        </div>
+
+
+        <table>
+            <tr>
+                <td></td>
+                <td>A</td>
+                <td>B</td>
+                <td>C</td>
+                <td>D</td>
+                <td>E</td>
+                <td>F</td>
+                <td>G</td>
+                <td>H</td>
+                <td></td>
+            </tr>
+            <!-- <tr>
+                <td>8</td>
+                <td><img src="images/BlackRook.svg"></td>
+                <td><img src="images/BlackKnight.svg"></td>
+                <td><img src="images/BlackBishop.svg"></td>
+                <td><img src="images/BlackQueen.svg"></td>
+                <td><img src="images/BlackKing.svg"></td>
+                <td><img src="images/BlackBishop.svg"></td>
+                <td><img src="images/BlackKnight.svg"></td>
+                <td><img src="images/BlackRook.svg"></td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td><img src="images/WhiteRook.svg"></td>
+                <td><img src="images/WhiteKnight.svg"></td>
+                <td><img src="images/WhiteBishop.svg"></td>
+                <td><img src="images/WhiteQueen.svg"></td>
+                <td><img src="images/WhiteKing.svg"></td>
+                <td><img src="images/WhiteBishop.svg"></td>
+                <td><img src="images/WhiteKnight.svg"></td>
+                <td><img src="images/WhiteRook.svg"></td>
+                <td>1</td>
+            </tr> -->
+            <tr>
+                <td></td>
+                <td>A</td>
+                <td>B</td>
+                <td>C</td>
+                <td>D</td>
+                <td>E</td>
+                <td>F</td>
+                <td>G</td>
+                <td>H</td>
+                <td></td>
+            </tr>
+        </table>
+        <br>
+
+        <div>
+            From <input type="text" size="4" maxlength="2" id="input1"> to <input type="text" size="4" maxlength="2" id="input2">
+            <button type="button" style="margin-right: 40px;" onclick="change_turn()">Move</button> 
+            <button type="button">Reset game</button> 
+        </div>
+        
+        <script>
+            let turn = "White";
+            let moves = [];
+            // function change_turn() {
+            //     if(turn == "White") turn = "Black";
+            //     else turn = "White";
+            //     document.getElementById("turn").innerText = turn;
+            //     let i1 = document.getElementById("input1");
+            //     let i2 = document.getElementById("input2");
+            //     add_move(i1.value, i2.value);
+            //     make_move(i1, i2);
+            //     i1.value = "";
+            //     i2.value = "";
+            // }
+
+            // function add_move(p1, p2) {
+            //     moves.push([p1, p2]);
+            //     let li = document.createElement("li");
+            //     li.appendChild(document.createTextNode(p1 + "→" + p2));
+            //     document.querySelector("ol").appendChild(li);
+            // }
+
+            // function make_move(p1, p2) {
+            //     let i1 = p1.value;
+            //     let i2 = p2.value;
+            //     //console.log("a".charCodeAt(0));
+            //     document.getElementsByTagName("tr")[i2[1] - 7][i2[0].charCodeat(0)-97];
+                
+            // }
+            fill();
+
+            function fill() {
+                let isOdd = true;
+                for(let i = 0; i < 7; ++i) {
+                    isOdd = !isOdd;
+                    let row = document.createElement("tr");
+                    for(let j = 0; j < 7; ++j) {
+                        let cell = document.createElement("td");
+                        if(j % 2 != 0 && isOdd) cell.classList.add("dark");
+                        else cell.classList.add("light");
+                        if(!isOdd && j % 2 == 0) cell.classList.add("dark");
+                        row.appendChild(cell);
+                    }
+                    console.log(row);
+                }
+            }
+            
+        </script>
+    </body>
+
+</html>
