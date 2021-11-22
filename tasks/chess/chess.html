@@ -1,242 +1,166 @@
 <!DOCTYPE html>
+<html>
+  <head>
 
-<html> 
+    <title>Chess</title>
 
-    <head>
-        <meta charset="utf-8">
-        <title>Chess where you really can't cheat</title>
+    <style>
+      body  { text-align       : center          ; }
+      table { margin-left      : auto            ;
+              margin-right     : auto            ;
+              border           : 2px solid Black ;
+              border-collapse  : collapse        ;
+              color            : Beige           ;
+              background-color : Sienna          ;
+              text-align       : center          ;
+              font-family      : Tahoma          ;
+              font-weight      : bold            ; }
+      td    { width            : 50px            ;
+              height           : 50px            ; }
+      input { text-align       : center          ; }
+     .light { background-color : Beige           ; }
+     .dark  { background-color : BurlyWood       ; }
+     .info1 { position         : fixed           ;
+              top              : 20px            ;
+              left             : 10px            ; }
+     .info2 { position         : fixed           ;
+              top              : 40px            ;
+              left             : 10px            ;
+              text-align       : left            ; }
+    </style>
 
-        <style>
-            body {
-                padding: 3%;
-                text-align: center;
+    <script>
+      //---------------------------------------------------------------------------------------------------------------------------
+      var turn        = "White"  ;
+      var squareClass = "light"  ;
+
+      function toggleTurn        ()  { if ( turn        == "White" ) { turn        = "Black" ; } else { turn        = "White" ; } }
+      function toggleSquareClass ()  { if ( squareClass == "light" ) { squareClass = "dark"  ; } else { squareClass = "light" ; } }
+
+      function getNextCharacter     ( character )  { return String.fromCodePoint( character.codePointAt(0) + 1 ) ; }
+      function getPreviousCharacter ( character )  { return String.fromCodePoint( character.codePointAt(0) - 1 ) ; }
+      //---------------------------------------------------------------------------------------------------------------------------
+      
+      function move ()
+      {
+        let i1 = document.getElementById("From").value;
+        let i2 = document.getElementById("To").value;
+        let rows = document.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+        rows[9-i2[1]].cells[i2[0].codePointAt(0)-64].innerHTML = rows[9-i1[1]].cells[i1[0].codePointAt(0)-64].innerHTML;
+        rows[9-i1[1]].cells[i1[0].codePointAt(0)-64].innerHTML = "";
+
+        let li = document.createElement("li");
+        li.appendChild(document.createTextNode(i1 + "→" + i2));
+        document.getElementById("Moves").appendChild(li);
+
+        toggleTurn();
+        document.getElementById("Turn").innerText = turn;
+      }
+
+      //---------------------------------------------------------------------------------------------------------------------------
+
+      function resetBoard ()
+      {
+        document.getElementById("Moves").innerHTML = "";
+        let table = document.getElementsByTagName("tbody");
+        for(let i = 0; i < 9; ++i) {
+          table.
+        }
+        fill_table();
+        turn = "White";
+        document.getElementById("Turn").innerText = turn;
+        console.log(document.getElementById("Moves").innerHTML);
+      }
+
+      //---------------------------------------------------------------------------------------------------------------------------
+    </script>
+
+  </head>
+  <body>
+
+    <div class="info1">
+      <b>Turn : </b><span id="Turn"></span>
+    </div>
+
+    <div class="info2">
+      <h3>Moves</h3>
+      <ol id="Moves"></ol>
+    </div>
+
+    <br>
+    <table>
+      <tr>
+        <td> </td>
+        <td>A</td>
+        <td>B</td>1
+        <td>C</td>
+        <td>D</td>
+        <td>E</td>
+        <td>F</td>
+        <td>G</td>
+        <td>H</td>
+        <td> </td>
+      </tr>
+
+      <script>
+        //-------------------------------------------------------------------------------------------------------------------------
+
+        fill_table();
+
+        function fill_table() {
+          document.getElementById("Turn").innerText = turn;
+          let isOdd = true;
+          let table = document.getElementsByTagName("tbody");
+          for(let i = 0; i < 8; ++i) {
+            isOdd = !isOdd;
+            let row = table[0].insertRow(-1);
+            let cell1 = row.insertCell();
+            cell1.innerText = 8 - i;
+            for(let j = 0; j < 8; ++j) {
+              let cell = row.insertCell();
+              if(i == 0) cell.innerHTML = '<img src="images/' + j + '.svg">';
+              if(i == 1) cell.innerHTML = '<img src="images/' + 9 + '.svg">';
+              if(i == 6) cell.innerHTML = '<img src="images/b' + 9 + '.svg">';
+              if(i == 7) cell.innerHTML = '<img src="images/b' + j + '.svg">';
+              // if(j % 2 != 0 && isOdd) cell.classList.add("dark");
+              // else if(!isOdd && j % 2 != 0) cell.classList.add("light");
+              // if(!isOdd && j % 2 == 0) cell.classList.add("dark");
+              // else if(isOdd && j % 2 == 0) cell.classList.add("light");
+              cell.classList.add(squareClass);
+              toggleSquareClass();
             }
-            table {
-                margin: auto;
-                border: 2px solid black; 
-                text-align: center;
-                font-weight: bold;
-                font-size: 20px; 
-                color: beige;
-                background-color: sienna;
-                border-collapse: collapse;
-            }
-            td {
-                width: 50px;
-                height: 50px;
-            }   
-            /* ul {
-                list-style-type: none;
-            } */
-            .light {
-                background-color: beige;
-            }
-            .dark {
-                background-color: burlywood;
-            }
-            .info1 {
-                position: fixed;
-                left: 10px;
-                top: 10px;
-                font-size: 20px;
-            }
-            .info2 {
-                position: fixed;
-                left: 10px;
-                top: 50px;
-                font-size: 20px;
-            }
-        </style>
-    </head>
+            toggleSquareClass();
+            let cell2 = row.insertCell(-1);
+            cell2.innerText = 8 - i;
+          }   
+        }
+       // console.log(getNextCharacter());
 
-    <body>
-        <div class="info1">
-            <strong>Turn : </strong><span id="turn">White</span><br>
-        </div>
-        <div class="info2">
-            <strong>Moves : </strong> 
-            <ol id="moves"></ol>
-        </div>
+        //-------------------------------------------------------------------------------------------------------------------------
+      </script>
 
+      <tr>
+        <td> </td>
+        <td>A</td>
+        <td>B</td>
+        <td>C</td>
+        <td>D</td>
+        <td>E</td>
+        <td>F</td>
+        <td>G</td>
+        <td>H</td>
+        <td> </td>
+      </tr>
+    </table>
+    <br>
 
-        <table>
-            <tr>
-                <td></td>
-                <td>A</td>
-                <td>B</td>
-                <td>C</td>
-                <td>D</td>
-                <td>E</td>
-                <td>F</td>
-                <td>G</td>
-                <td>H</td>
-                <td></td>
-            </tr>
-            <!-- <tr>
-                <td>8</td>
-                <td><img src="images/BlackRook.svg"></td>
-                <td><img src="images/BlackKnight.svg"></td>
-                <td><img src="images/BlackBishop.svg"></td>
-                <td><img src="images/BlackQueen.svg"></td>
-                <td><img src="images/BlackKing.svg"></td>
-                <td><img src="images/BlackBishop.svg"></td>
-                <td><img src="images/BlackKnight.svg"></td>
-                <td><img src="images/BlackRook.svg"></td>
-                <td>8</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td><img src="images/BlackPawn.svg"></td>
-                <td><img src="images/BlackPawn.svg"></td>
-                <td><img src="images/BlackPawn.svg"></td>
-                <td><img src="images/BlackPawn.svg"></td>
-                <td><img src="images/BlackPawn.svg"></td>
-                <td><img src="images/BlackPawn.svg"></td>
-                <td><img src="images/BlackPawn.svg"></td>
-                <td><img src="images/BlackPawn.svg"></td>
-                <td>7</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>6</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>4</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>3</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td><img src="images/WhitePawn.svg"></td>
-                <td><img src="images/WhitePawn.svg"></td>
-                <td><img src="images/WhitePawn.svg"></td>
-                <td><img src="images/WhitePawn.svg"></td>
-                <td><img src="images/WhitePawn.svg"></td>
-                <td><img src="images/WhitePawn.svg"></td>
-                <td><img src="images/WhitePawn.svg"></td>
-                <td><img src="images/WhitePawn.svg"></td>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td><img src="images/WhiteRook.svg"></td>
-                <td><img src="images/WhiteKnight.svg"></td>
-                <td><img src="images/WhiteBishop.svg"></td>
-                <td><img src="images/WhiteQueen.svg"></td>
-                <td><img src="images/WhiteKing.svg"></td>
-                <td><img src="images/WhiteBishop.svg"></td>
-                <td><img src="images/WhiteKnight.svg"></td>
-                <td><img src="images/WhiteRook.svg"></td>
-                <td>1</td>
-            </tr> -->
-            <tr>
-                <td></td>
-                <td>A</td>
-                <td>B</td>
-                <td>C</td>
-                <td>D</td>
-                <td>E</td>
-                <td>F</td>
-                <td>G</td>
-                <td>H</td>
-                <td></td>
-            </tr>
-        </table>
-        <br>
+    <p>
+      From &nbsp;<input type="text" id="From" name="From" size="4" value="E2"> &nbsp;
+      To   &nbsp;<input type="text" id="To"   name="To"   size="4" value="E3"> &nbsp; &nbsp;
+      <button type="button" onclick="move();" style="margin-right:80px;">Move</button>
+      <button type="button" onclick="resetBoard();">Reset Game</button>
+    </p>
+    <br>
 
-        <div>
-            From <input type="text" size="4" maxlength="2" id="input1"> to <input type="text" size="4" maxlength="2" id="input2">
-            <button type="button" style="margin-right: 40px;" onclick="change_turn()">Move</button> 
-            <button type="button">Reset game</button> 
-        </div>
-        
-        <script>
-            let turn = "White";
-            let moves = [];
-            // function change_turn() {
-            //     if(turn == "White") turn = "Black";
-            //     else turn = "White";
-            //     document.getElementById("turn").innerText = turn;
-            //     let i1 = document.getElementById("input1");
-            //     let i2 = document.getElementById("input2");
-            //     add_move(i1.value, i2.value);
-            //     make_move(i1, i2);
-            //     i1.value = "";
-            //     i2.value = "";
-            // }
-
-            // function add_move(p1, p2) {
-            //     moves.push([p1, p2]);
-            //     let li = document.createElement("li");
-            //     li.appendChild(document.createTextNode(p1 + "→" + p2));
-            //     document.querySelector("ol").appendChild(li);
-            // }
-
-            // function make_move(p1, p2) {
-            //     let i1 = p1.value;
-            //     let i2 = p2.value;
-            //     //console.log("a".charCodeAt(0));
-            //     document.getElementsByTagName("tr")[i2[1] - 7][i2[0].charCodeat(0)-97];
-                
-            // }
-            fill();
-
-            function fill() {
-                let isOdd = true;
-                for(let i = 0; i < 7; ++i) {
-                    isOdd = !isOdd;
-                    let row = document.createElement("tr");
-                    for(let j = 0; j < 7; ++j) {
-                        let cell = document.createElement("td");
-                        if(j % 2 != 0 && isOdd) cell.classList.add("dark");
-                        else cell.classList.add("light");
-                        if(!isOdd && j % 2 == 0) cell.classList.add("dark");
-                        row.appendChild(cell);
-                    }
-                    console.log(row);
-                }
-            }
-            
-        </script>
-    </body>
-
+  </body>
 </html>

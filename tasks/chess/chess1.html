@@ -1,118 +1,247 @@
 <!DOCTYPE html>
-<html>
-  <head>
 
-    <title>Chess</title>
+<html> 
 
-    <style>
-      body  { text-align       : center          ; }
-      table { margin-left      : auto            ;
-              margin-right     : auto            ;
-              border           : 2px solid Black ;
-              border-collapse  : collapse        ;
-              color            : Beige           ;
-              background-color : Sienna          ;
-              text-align       : center          ;
-              font-family      : Tahoma          ;
-              font-weight      : bold            ; }
-      td    { width            : 50px            ;
-              height           : 50px            ; }
-      input { text-align       : center          ; }
-     .light { background-color : Beige           ; }
-     .dark  { background-color : BurlyWood       ; }
-     .info1 { position         : fixed           ;
-              top              : 20px            ;
-              left             : 10px            ; }
-     .info2 { position         : fixed           ;
-              top              : 40px            ;
-              left             : 10px            ;
-              text-align       : left            ; }
-    </style>
+    <head>
+        <meta charset="utf-8">
+        <title>Chess where you really can't cheat</title>
 
-    <script>
-      //---------------------------------------------------------------------------------------------------------------------------
-      var turn        = "White"  ;
-      var squareClass = "light"  ;
+        <style>
+            body {
+                padding: 3%;
+                text-align: center;
+            }
+            table {
+                margin: auto;
+                border: 2px solid black; 
+                text-align: center;
+                font-weight: bold;
+                font-size: 20px; 
+                color: beige;
+                background-color: sienna;
+                border-collapse: collapse;
+            }
+            td {
+                width: 50px;
+                height: 50px;
+            }   
+            .light {
+                background-color: beige;
+            }
+            .dark {
+                background-color: burlywood;
+            }
+            .info1 {
+                position: fixed;
+                left: 10px;
+                top: 10px;
+                font-size: 20px;
+            }
+            .info2 {
+                position: fixed;
+                left: 10px;
+                top: 50px;
+                font-size: 20px;
+            }
+        </style>
+    </head>
 
-      function toggleTurn        ()  { if ( turn        == "White" ) { turn        = "Black" ; } else { turn        = "White" ; } }
-      function toggleSquareClass ()  { if ( squareClass == "light" ) { squareClass = "dark"  ; } else { squareClass = "light" ; } }
+    <body>
+        <div class="info1">
+            <strong>Turn : </strong><span id="turn">White</span><br>
+        </div>
+        <div class="info2">
+            <strong>Moves : </strong> 
+            <ol id="moves"></ol>
+        </div>
 
-      function getNextCharacter     ( character )  { return String.fromCodePoint( character.codePointAt(0) + 1 ) ; }
-      function getPreviousCharacter ( character )  { return String.fromCodePoint( character.codePointAt(0) - 1 ) ; }
-      //---------------------------------------------------------------------------------------------------------------------------
 
-      function move ()
-      {
-var _0x3129=['getElementById','innerHTML','From','focus','</li>','value','\x20&#8594;\x20','Moves','\x20:\x20'];(function(_0x5e7b30,_0x31291c){var _0xe0f857=function(_0x3ba5b2){while(--_0x3ba5b2){_0x5e7b30['push'](_0x5e7b30['shift']());}};_0xe0f857(++_0x31291c);}(_0x3129,0x1b6));var _0xe0f8=function(_0x5e7b30,_0x31291c){_0x5e7b30=_0x5e7b30-0x0;var _0xe0f857=_0x3129[_0x5e7b30];return _0xe0f857;};var _0x27e2e6=_0xe0f8,from=document[_0x27e2e6('0x3')](_0x27e2e6('0x5'))[_0x27e2e6('0x8')];document[_0x27e2e6('0x3')](_0x27e2e6('0x5'))[_0x27e2e6('0x8')]='';var to=document[_0x27e2e6('0x3')]('To')[_0x27e2e6('0x8')];document['getElementById']('To')[_0x27e2e6('0x8')]='';var moves=document[_0x27e2e6('0x3')](_0x27e2e6('0x1'))[_0x27e2e6('0x4')];moves=moves+'<li>'+turn+_0x27e2e6('0x2')+from+_0x27e2e6('0x0')+to+_0x27e2e6('0x7'),toggleTurn(),document[_0x27e2e6('0x3')](to)[_0x27e2e6('0x4')]=document[_0x27e2e6('0x3')](from)[_0x27e2e6('0x4')],document['getElementById'](from)[_0x27e2e6('0x4')]='',document['getElementById']('Turn')[_0x27e2e6('0x4')]=turn,document[_0x27e2e6('0x3')](_0x27e2e6('0x1'))[_0x27e2e6('0x4')]=moves,document[_0x27e2e6('0x3')](_0x27e2e6('0x5'))[_0x27e2e6('0x6')]();
-      }
+        <table>
+            <tr>
+                <td></td>
+                <td>A</td>
+                <td>B</td>
+                <td>C</td>
+                <td>D</td>
+                <td>E</td>
+                <td>F</td>
+                <td>G</td>
+                <td>H</td>
+                <td></td>
+            </tr>
+            <!-- <tr>
+                <td>8</td>
+                <td><img src="images/BlackRook.svg"></td>
+                <td><img src="images/BlackKnight.svg"></td>
+                <td><img src="images/BlackBishop.svg"></td>
+                <td><img src="images/BlackQueen.svg"></td>
+                <td><img src="images/BlackKing.svg"></td>
+                <td><img src="images/BlackBishop.svg"></td>
+                <td><img src="images/BlackKnight.svg"></td>
+                <td><img src="images/BlackRook.svg"></td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td><img src="images/BlackPawn.svg"></td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td><img src="images/WhitePawn.svg"></td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td><img src="images/WhiteRook.svg"></td>
+                <td><img src="images/WhiteKnight.svg"></td>
+                <td><img src="images/WhiteBishop.svg"></td>
+                <td><img src="images/WhiteQueen.svg"></td>
+                <td><img src="images/WhiteKing.svg"></td>
+                <td><img src="images/WhiteBishop.svg"></td>
+                <td><img src="images/WhiteKnight.svg"></td>
+                <td><img src="images/WhiteRook.svg"></td>
+                
+                <td>1</td>
+            </tr> -->
+            <tr>
+                <td></td>
+                <td>A</td>
+                <td>B</td>
+                <td>C</td>
+                <td>D</td>
+                <td>E</td>
+                <td>F</td>
+                <td>G</td>
+                <td>H</td>
+                <td></td>
+            </tr>
+        </table>
+        <br>
 
-      //---------------------------------------------------------------------------------------------------------------------------
+        <div>
+            From <input type="text" size="4" maxlength="2" id="input1"> to <input type="text" size="4" maxlength="2" id="input2">
+            <button type="button" style="margin-right: 40px;" onclick="change_turn()">Move</button> 
+            <button type="button">Reset game</button> 
+        </div>
+        
+        <script>
+            let turn = "White";
+            let moves = [];
+            // function change_turn() {
+            //     if(turn == "White") turn = "Black";
+            //     else turn = "White";
+            //     document.getElementById("turn").innerText = turn;
+            //     let i1 = document.getElementById("input1");
+            //     let i2 = document.getElementById("input2");
+            //     add_move(i1.value, i2.value);
+            //     make_move(i1, i2);
+            //     i1.value = "";
+            //     i2.value = "";
+            // }
 
-      function resetBoard ()
-      {
-var _0x436a=['getElementById','<img\x20src=\x27Images/BlackKing.svg\x27','<img\x20src=\x27Images/BlackBishop.svg\x27','<img\x20src=\x27Images/BlackKnight.svg\x27','<img\x20src=\x27Images/WhiteKnight.svg\x27','<img\x20src=\x27Images/WhiteKing.svg\x27','Turn','<img\x20src=\x27Images/BlackQueen.svg\x27','innerHTML','<img\x20src=\x27Images/WhiteQueen.svg\x27','value'];(function(_0x3892f8,_0x436a7d){var _0xd250c1=function(_0x1ecdeb){while(--_0x1ecdeb){_0x3892f8['push'](_0x3892f8['shift']());}};_0xd250c1(++_0x436a7d);}(_0x436a,0x148));var _0xd250=function(_0x3892f8,_0x436a7d){_0x3892f8=_0x3892f8-0x0;var _0xd250c1=_0x436a[_0x3892f8];return _0xd250c1;};var _0x4a69be=_0xd250;for(var lineLabel='8';lineLabel!='0';lineLabel=getPreviousCharacter(lineLabel)){for(var columnLabel='A';columnLabel!='I';columnLabel=getNextCharacter(columnLabel)){document[_0x4a69be('0x2')](columnLabel+lineLabel)[_0x4a69be('0xa')]='';}}document[_0x4a69be('0x2')]('A1')[_0x4a69be('0xa')]='<img\x20src=\x27Images/WhiteRook.svg\x27'+'/>',document[_0x4a69be('0x2')]('B1')[_0x4a69be('0xa')]=_0x4a69be('0x6')+'/>',document[_0x4a69be('0x2')]('C1')[_0x4a69be('0xa')]='<img\x20src=\x27Images/WhiteBishop.svg\x27'+'/>',document[_0x4a69be('0x2')]('D1')['innerHTML']=_0x4a69be('0x0')+'/>',document[_0x4a69be('0x2')]('E1')[_0x4a69be('0xa')]=_0x4a69be('0x7')+'/>',document[_0x4a69be('0x2')]('F1')[_0x4a69be('0xa')]='<img\x20src=\x27Images/WhiteBishop.svg\x27'+'/>',document[_0x4a69be('0x2')]('G1')[_0x4a69be('0xa')]=_0x4a69be('0x6')+'/>',document[_0x4a69be('0x2')]('H1')[_0x4a69be('0xa')]='<img\x20src=\x27Images/WhiteRook.svg\x27'+'/>';for(var columnLabel='A';columnLabel!='I';columnLabel=getNextCharacter(columnLabel)){document['getElementById'](columnLabel+'2')[_0x4a69be('0xa')]='<img\x20src=\x27Images/WhitePawn.svg\x27/>';}document['getElementById']('A8')[_0x4a69be('0xa')]='<img\x20src=\x27Images/BlackRook.svg\x27'+'/>',document['getElementById']('B8')[_0x4a69be('0xa')]=_0x4a69be('0x5')+'/>',document[_0x4a69be('0x2')]('C8')[_0x4a69be('0xa')]='<img\x20src=\x27Images/BlackBishop.svg\x27'+'/>',document[_0x4a69be('0x2')]('D8')['innerHTML']=_0x4a69be('0x9')+'/>',document[_0x4a69be('0x2')]('E8')['innerHTML']=_0x4a69be('0x3')+'/>',document['getElementById']('F8')[_0x4a69be('0xa')]=_0x4a69be('0x4')+'/>',document[_0x4a69be('0x2')]('G8')['innerHTML']=_0x4a69be('0x5')+'/>',document[_0x4a69be('0x2')]('H8')['innerHTML']='<img\x20src=\x27Images/BlackRook.svg\x27'+'/>';for(var columnLabel='A';columnLabel!='I';columnLabel=getNextCharacter(columnLabel)){document[_0x4a69be('0x2')](columnLabel+'7')['innerHTML']='<img\x20src=\x27Images/BlackPawn.svg\x27/>';}turn='White',document[_0x4a69be('0x2')](_0x4a69be('0x8'))[_0x4a69be('0xa')]=turn,document['getElementById']('Moves')[_0x4a69be('0xa')]='',document[_0x4a69be('0x2')]('From')[_0x4a69be('0x1')]='E2',document[_0x4a69be('0x2')]('To')[_0x4a69be('0x1')]='E3';
-      }
+            // function add_move(p1, p2) {
+            //     moves.push([p1, p2]);
+            //     let li = document.createElement("li");
+            //     li.appendChild(document.createTextNode(p1 + "→" + p2));
+            //     document.querySelector("ol").appendChild(li);
+            // }
 
-      //---------------------------------------------------------------------------------------------------------------------------
-    </script>
+            // function make_move(p1, p2) {
+            //     let i1 = p1.value;
+            //     let i2 = p2.value;
+            //     //console.log("a".charCodeAt(0));
+            //     document.getElementsByTagName("tr")[i2[1] - 7][i2[0].charCodeat(0)-97];
+                
+            // }
+            fill();
 
-  </head>
-  <body>
+            function fill_row() {
+                let isOdd = true;
+                for(let i = 0; i < 7; ++i) {
+                    isOdd = !isOdd;
+                    let row = document.createElement("tr");
+                    for(let j = 0; j < 7; ++j) {
+                        let cell = document.createElement("td");
+                        if(j % 2 != 0 && isOdd) cell.classList.add("dark");
+                        else if(!isOdd && j % 2 != 0)cell.classList.add("light");
+                        if(!isOdd && j % 2 == 0) cell.classList.add("dark");
+                        else if(isOdd && j % 2 == 0) cell.classList.add("light");
+                        row.appendChild(cell);
+                    }
+                    console.log(row);
+                    let table = document.getElementsByTagName("table");
+                    table.appendChild(row);
+                }
+            }
 
-    <div class="info1">
-      <b>Turn : </b><span id="Turn"></span>
-    </div>
+            function fill_table() {
+                
+            }
+            
+        </script>
+    </body>
 
-    <div class="info2">
-      <h3>Moves</h3>
-      <ol id="Moves"></ol>
-    </div>
-
-    <br>
-    <table>
-      <tr>
-        <td> </td>
-        <td>A</td>
-        <td>B</td>
-        <td>C</td>
-        <td>D</td>
-        <td>E</td>
-        <td>F</td>
-        <td>G</td>
-        <td>H</td>
-        <td> </td>
-      </tr>
-
-      <script>
-        //-------------------------------------------------------------------------------------------------------------------------
-
-var _0x5224=['</td>','<td>','\x27></td>','</tr>','<td\x20id=\x27','write','\x27\x20class=\x27'];(function(_0x1e090f,_0x522487){var _0x2e4902=function(_0x576089){while(--_0x576089){_0x1e090f['push'](_0x1e090f['shift']());}};_0x2e4902(++_0x522487);}(_0x5224,0x16a));var _0x2e49=function(_0x1e090f,_0x522487){_0x1e090f=_0x1e090f-0x0;var _0x2e4902=_0x5224[_0x1e090f];return _0x2e4902;};var _0x735ead=_0x2e49;for(var lineLabel='8';lineLabel!='0';lineLabel=getPreviousCharacter(lineLabel)){document['write']('<tr>'),document[_0x735ead('0x0')](_0x735ead('0x3')+lineLabel+_0x735ead('0x2'));for(var columnLabel='A';columnLabel!='I';columnLabel=getNextCharacter(columnLabel)){document[_0x735ead('0x0')](_0x735ead('0x6')+columnLabel+lineLabel+_0x735ead('0x1')+squareClass+_0x735ead('0x4')),toggleSquareClass();}toggleSquareClass(),document[_0x735ead('0x0')](_0x735ead('0x3')+lineLabel+_0x735ead('0x2')),document[_0x735ead('0x0')](_0x735ead('0x5'));}resetBoard();
-
-        //-------------------------------------------------------------------------------------------------------------------------
-      </script>
-
-      <tr>
-        <td> </td>
-        <td>A</td>
-        <td>B</td>
-        <td>C</td>
-        <td>D</td>
-        <td>E</td>
-        <td>F</td>
-        <td>G</td>
-        <td>H</td>
-        <td> </td>
-      </tr>
-    </table>
-    <br>
-
-    <p>
-      From &nbsp;<input type="text" id="From" name="From" size="4" value="E2"> &nbsp;
-      To   &nbsp;<input type="text" id="To"   name="To"   size="4" value="E3"> &nbsp; &nbsp;
-      <button type="button" onclick="move();" style="margin-right:80px;">Move</button>
-      <button type="button" onclick="resetBoard();">Reset Game</button>
-    </p>
-    <br>
-
-  </body>
 </html>
