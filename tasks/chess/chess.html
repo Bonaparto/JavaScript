@@ -45,7 +45,7 @@
       {
         let i1 = document.getElementById("From").value;
         let i2 = document.getElementById("To").value;
-        let rows = document.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+        let rows = document.getElementsByTagName("tr");
         rows[9-i2[1]].cells[i2[0].codePointAt(0)-64].innerHTML = rows[9-i1[1]].cells[i1[0].codePointAt(0)-64].innerHTML;
         rows[9-i1[1]].cells[i1[0].codePointAt(0)-64].innerHTML = "";
 
@@ -61,15 +61,18 @@
 
       function resetBoard ()
       {
+        let table = document.getElementsByTagName("table")[0];
+        let last_row = table.lastElementChild.lastElementChild;
+
+        for(let i = 0; i < 9; ++i) table.lastElementChild.lastElementChild.remove();
         document.getElementById("Moves").innerHTML = "";
-        let table = document.getElementsByTagName("tbody");
-        for(let i = 0; i < 9; ++i) {
-          table.
-        }
+
         fill_table();
+        table.insertRow(-1);
+        table.lastElementChild.lastElementChild.innerHTML = last_row.innerHTML;
+        
         turn = "White";
         document.getElementById("Turn").innerText = turn;
-        console.log(document.getElementById("Moves").innerHTML);
       }
 
       //---------------------------------------------------------------------------------------------------------------------------
